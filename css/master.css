@@ -1,23 +1,31 @@
 body{
     margin: 0;
-    padding-left: 10vw;
-    padding-top: 10vh;
+    padding-left: 5vw;
+    padding-top: 5vh;
     overflow-y: hidden;
 }
+h1{
+    margin-left: 1em;
+    color: ghostwhite;
+}
 .container{
-    height: 80vh;
-    width: 80vw;
+    background-image: url("../img/Snow.jpg");
+    background-size: cover;
+    height: 90vh;
+    width: 90vw;
     background-color: red;
     margin: 0;
     overflow-y: hidden;
+    border-radius: 5em;
 }
 .sneeuwPik{
     /*height: 10vh;*/
     stroke-width: 3px;
     stroke: whitesmoke;
     fill: none;
+    position: absolute;
 }
 
 svg{
-    height: 250px;
+    height: 125px;
 }

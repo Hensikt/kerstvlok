@@ -107,25 +107,56 @@ let codeSVGvlok = '<svg version="1.1" class="vlokje" xmlns="http://www.w3.org/20
     ' </svg>';
 
 class Vlok {
-    constructor(horizontaal, verticaal, snelheid, kleur) {
-        this._hori = horizontaal;
-        this._vert = verticaal;
-        this._snelh = snelheid;
-        this._kleur = kleur;
+    constructor(horizontale, verticale, valsnelheid, grootte, draaisnelheid) {
+        this._grootte = grootte;
+        this._horizontale = horizontale + container.offsetLeft;
+        this._verticale = verticale + container.offsetTop;
+        this._valsnelheid = valsnelheid * grootte;
+        this._draaisnelheid = draaisnelheid;
+        this._hoek = 0;
+        this._sneeuw;
     }
 
     // method die een element creëerd en geplaatst plaats deze in de body
     maken() {
-        let wrapper = document.getElementById('container');
-        let sneeuw = document.createElement("div");
-        sneeuw.className = 'sneeuwPik';
-        sneeuw.style.marginTop = this._vert + 'px';
-        sneeuw.style.marginLeft = this._hori + 'px';
-        sneeuw.innerHTML = codeSVGvlok;
-        wrapper.appendChild(sneeuw);
+        this._sneeuw = document.createElement('div');
+        this._sneeuw.className = 'sneeuwPik';
+        this._sneeuw.style.top  = this._verticale + 'px';
+        this._sneeuw.style.height = 3 * this._grootte + 'em';
+        this._sneeuw.style.width = 3 * this._grootte + 'em';
+        this._sneeuw.style.left = this._horizontale + 'px';
+        this._sneeuw.innerHTML = this._svg;
+        container.appendChild(this._sneeuw);
+        this._sneeuw.innerHTML = codeSVGvlok;
+        this.bewegen();
+    }
+    vallen() {
+        this._verticale += this._valsnelheid;
+        this._sneeuw.style.left = this._horizontale + 'px';
+        this._sneeuw.style.top = this._verticale + 'px';
+        this._hoek += this._draaisnelheid;
+        this._sneeuw.style.transform = "rotate(" + this._hoek + "deg)";
+    }
+
+    bewegen() {
+        let bewegen = requestAnimationFrame( () => {
+            if(this._verticale > container.offsetHeight + container.offsetTop - 60){
+                this._verticale = container.offsetTop;
+                this._horizontale = (Math.random()*container.offsetWidth) + container.offsetLeft;
+                this.vallen();
+                this.bewegen();
+            } else {
+                this.vallen();
+                this.bewegen();
+            }
+        });
     }
 }
-let vlok = new Vlok(Math.random()*200, Math.random()*500, 4, 'white');
-vlok.maken();
-let vlok2 = new Vlok(Math.random()*200, Math.random()*500, 4, 'white');
-vlok2.maken();
+for(let i=0; i<20; ){
+    let number = Math.random() * 4;
+    if(number > 1){
+        window['sneeuw'+i] = new Vlok(Math.random()*container.offsetWidth, 0, 1.5, number, Math.random() * 2);
+        window['sneeuw'+i].maken();
+        i++;
+    }
+}
