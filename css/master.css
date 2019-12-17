@@ -1,0 +1,23 @@
+body{
+    margin: 0;
+    padding-left: 10vw;
+    padding-top: 10vh;
+    overflow-y: hidden;
+}
+.container{
+    height: 80vh;
+    width: 80vw;
+    background-color: red;
+    margin: 0;
+    overflow-y: hidden;
+}
+.sneeuwPik{
+    /*height: 10vh;*/
+    stroke-width: 3px;
+    stroke: whitesmoke;
+    fill: none;
+}
+
+svg{
+    height: 250px;
+}
